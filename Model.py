@@ -95,7 +95,7 @@ class EfficientNet(nn.Module):
                  batch_norm_momentum, drop_connect_rate, num_output, blocks_args=BLOCKS_ARGS):
         super().__init__()
 
-        # self.batch_norm_mom = 1 - batch_norm_momentum
+        batch_norm_momentum = 1 - batch_norm_momentum
         self.drop_connect_rate = drop_connect_rate
         self.blocks_args = blocks_args
         self.model_name = model_name
@@ -104,7 +104,7 @@ class EfficientNet(nn.Module):
         Conv2d = get_same_static_padding_conv2d(image_size=resolu)
 
         # Stem
-        out_channel = round_filters(32, width_coeff, depth_coeff)
+        out_channel = round_filters(32, width_coeff, depth_divisor)
 
         self.stem = nn.Sequential(
             Conv2d(3, out_channel, kernel_size=3, stride=2, bias=False),
