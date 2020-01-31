@@ -21,7 +21,7 @@ blockArgs = namedtuple("Block_args",
 
 blockArgs.__new__.__defaults__ = (None,) * len(blockArgs._fields)
 
-BLOCK_ARGS = [
+BLOCKS_ARGS = [
     blockArgs(kernel_size=3, num_repeat=1, input_channels=32, output_channels=16,
               expand_ratio=1, id_skip=True, strides=[1, 1], se_ratio=0.25),
     blockArgs(kernel_size=3, num_repeat=2, input_channels=16, output_channels=24,
@@ -135,8 +135,9 @@ class Conv2dSamePadding(nn.Conv2d):
 # Identity layer
 # Return the output same with the input
 class Identity(nn.Module):
-    def __init__(self):
-        super().__init__()
-
     def forward(self, input):
         return input
+
+class Flatten(nn.Module):
+    def forward(self, input):
+        return input.view(input.size(0), -1)

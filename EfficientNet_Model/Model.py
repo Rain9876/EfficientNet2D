@@ -1,5 +1,5 @@
 from torch import nn
-from Utils import (
+from .Utils import (
     BLOCKS_ARGS,
     EfficientSwish,
     round_filters,
@@ -18,15 +18,16 @@ class Sequeeze_Excitation(nn.Module):
         self.pooling = nn.AdaptiveAvgPool2d(1)
 
         self.se_layer = nn.Sequential(
-            nn.Conv2d(in_channels=in_channels, out_channels=reduced_channel, kernel_size=1, padding=0,bias=True),
+            nn.Conv2d(in_channels=in_channels, out_channels=reduced_channel, kernel_size=1, padding=0, bias=True),
             EfficientSwish(),
-            nn.Conv2d(in_channels=reduced_channel, out_channels=in_channels, kernel_size=1, padding=0,bias=True),
+            nn.Conv2d(in_channels=reduced_channel, out_channels=in_channels, kernel_size=1, padding=0, bias=True),
             nn.Sigmoid()
         )
 
     def forward(self, x):
         x_se = self.se_layer(self.pooling(x))
         return x_se * x
+
 
 # Mobile Inverted Residual Bottleneck Block With the SE layer
 # Bottleneck architecture begins with 1x1 and ends with 1x1
@@ -59,7 +60,7 @@ class MBCov_Block(nn.Module):
         # Squeeze and Excitation layer
         if block_args.se_ratio:
             reduced_channel = max(1, int(block_args.input_channels * block_args.se_ratio))
-            self.se_layer = Sequeeze_Excitation(expand_channels,reduced_channel)
+            self.se_layer = Sequeeze_Excitation(expand_channels, reduced_channel)
 
         # Pointwise Conv (Expand layer) k1x1
         self.output_conv = nn.Sequential(
@@ -83,8 +84,8 @@ class MBCov_Block(nn.Module):
 
         # id skip, drop connect
         if self.block_args.id_skip and self.block_args.strides == 1 and \
-                self.block_args.input_channels == self.block_args.output_channels and self.training:
-            if drop_connect_rate:
+                self.block_args.input_channels == self.block_args.output_channels:
+            if drop_connect_rate and self.training:
                 x = drop_connect(x, drop_connect_rate)
             x = x + inputs
         return x
