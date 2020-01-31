@@ -6,7 +6,7 @@ from Training.Fine_tuning import *
 # fine_tuning(md, 10)
 #
 
-print(sys.path)
+# print(sys.path)
 
 md = pre_trained_model()
 model = fine_tuning(md, 10)

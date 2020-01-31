@@ -75,7 +75,7 @@ def ImageProcessing():
     transform = transforms.Compose([transforms.Resize(224), transforms.CenterCrop(224),
                                     transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    train_dat = datasets.CIFAR10(root=sys.path[0] + "../data/CIFAR10", train=True, download=True, transform=transform)
+    train_dat = datasets.CIFAR10(root=sys.path[0] + "/data/CIFAR10", train=True, download=True, transform=transform)
 
     train_loader = DataLoader(train_dat, batch_size=10, shuffle=False, num_workers=2)
 
