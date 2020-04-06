@@ -9,7 +9,7 @@ from Training.Fine_tuning import *
 # print(sys.path)
 
 md = pre_trained_model()
-model = fine_tuning(md, 10)
+model = fine_tuning(md, 100)
 
 
 

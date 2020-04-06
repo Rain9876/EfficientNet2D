@@ -72,14 +72,14 @@ def testing(model, test_loader, criterion):
 
 
 def ImageProcessing():
-    transform = transforms.Compose([transforms.Resize(224), transforms.CenterCrop(224),
+    transform = transforms.Compose([transforms.Resize(260), transforms.CenterCrop(260),
                                     transforms.ToTensor(), transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    train_dat = datasets.CIFAR10(root=sys.path[0] + "/data/CIFAR10", train=True, download=True, transform=transform)
+    train_dat = datasets.CIFAR100(root=sys.path[0] + "/data/CIFAR100", train=True, download=True, transform=transform)
 
     train_loader = DataLoader(train_dat, batch_size=10, shuffle=False, num_workers=2)
 
-    test_dat = datasets.CIFAR10(root=sys.path[0] + '/data/CIFAR10', train=False, download=True, transform=transform)
+    test_dat = datasets.CIFAR100(root=sys.path[0] + '/data/CIFAR100', train=False, download=True, transform=transform)
 
     test_loader = torch.utils.data.DataLoader(test_dat, batch_size=10, shuffle=False, num_workers=2)
 
@@ -164,5 +164,5 @@ def evaluation():
         print('Predicted: ', ' '.join('%5s' % classes[predicted[j]] for j in range(10)))
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#    main()

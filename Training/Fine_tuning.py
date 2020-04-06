@@ -26,7 +26,7 @@ if use_GPU: torch.cuda.manual_seed(0)
 print("Using GPU: {}".format(use_GPU))
 
 img_stats = [[0.485, 0.456, 0.406], [0.229, 0.224, 0.225]]
-resolution = 240
+resolution = 224
 
 
 def pre_trained_model():
@@ -52,7 +52,8 @@ def pre_trained_model():
 
     model_state = torch.load(sys.path[0]+"/data/Pre_trained_states/" + instance["b0"])
     model.load_state_dict(model_state, strict=False)
-
+    print(model)
+    
     #
     # # A basic remapping is required
     # mapping = {
