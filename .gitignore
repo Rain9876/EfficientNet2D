@@ -292,7 +292,7 @@ TSWLatexianTemp*
 .DS_Store
 .AppleDouble
 .LSOverride
-.idea
+
 # Icon must end with two \r
 Icon
 
@@ -427,7 +427,9 @@ tags
 # Coc configuration directory
 .vim
 
-data/Pre_trained_states/*
-
+# Local files
+data/*
 */__pycache__/
+.idea
+
 # End of https://www.gitignore.io/api/vim,linux,macos,latex,pycharm
